@@ -21,7 +21,7 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 
 # Dependency installation
 apt update
-apt install haproxy postgresql rabbitmq-server squid-openssl
+apt install haproxy postgresql rabbitmq-server squid-openssl containers-storage
 apt install cri-o  # repo: kubic
 apt install opensearch  # repo: opensearch
 apt install kubeadm  # repo: kubernetes
@@ -36,7 +36,7 @@ seccomp_profile = "/usr/share/containers/seccomp.json"
 
 #### Configure container storage
 ```
-vim /etc/containers/storage.conf
+vim /usr/share/containers/storage.conf
 ...
 driver = "overlay"
 ...
@@ -91,7 +91,7 @@ MACAddressPolicy=random
 systemctl restart systemd-networkd
 ```
 
-#### Prevent the host from autoconfiguring Calico network interfaces
+#### If NetworkManager is installed, prevent the host from autoconfiguring Calico network interfaces
 
 ```
 vim /etc/NetworkManager/conf.d/calico.conf
@@ -143,7 +143,7 @@ host    api             api             172.16.0.0/12           trust
 
 #### RabbitMQ
 ```
-vim /etc/rabbitmq/rabbitmq.conf
+vim /etc/rabbitmq/rabbitmq.conf # new file?
 ...
 loopback_users = none
 ...
@@ -152,6 +152,8 @@ vim /etc/rabbitmq/rabbitmq-env.conf
 NODE_IP_ADDRESS=192.168.100.1
 ...
 ```
+
+# run from inside a clone of this repo
 
 #### Squid
 ```
